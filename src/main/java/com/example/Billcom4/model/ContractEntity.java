@@ -11,7 +11,7 @@ public class ContractEntity {
 
 
     @Column(nullable = true, unique = true)
-    private int client_id;
+    private int clientid;
 
     @Column(nullable = false)
     private String number;
@@ -19,9 +19,9 @@ public class ContractEntity {
     @Column(nullable = false)
     private String status;
 
-    public ContractEntity(Long id, int client_id, String number, String status) {
+    public ContractEntity(Long id, int clientid, String number, String status) {
         this.id = id;
-        this.client_id = client_id;
+        this.clientid = clientid;
         this.number = number;
         this.status = status;
     }
@@ -38,12 +38,12 @@ public class ContractEntity {
         this.id = id;
     }
 
-    public int getClient_id() {
-        return client_id;
+    public int getClientid() {
+        return clientid;
     }
 
-    public void setClient_id(int client_id) {
-        this.client_id = client_id;
+    public void setClientid(int clientid) {
+        this.clientid = clientid;
     }
 
     public String getNumber() {
@@ -66,7 +66,7 @@ public class ContractEntity {
     public String toString() {
         return "ContractEntity{" +
                 "id=" + id +
-                ", client_id='" + client_id + '\'' +
+                ", clientid='" + clientid + '\'' +
                 ", number='" + number + '\'' +
                 ", status='" + status + '\'' +
                 '}';
