@@ -16,17 +16,18 @@ public class ContractImp implements ContractService {
         this.contractRepository = contractRepository;
     }
     @Override
-    public String  assignContract(int client_id) {
+    public String  assignContract(int clientid) {
         List<ContractEntity> contracts_available= contractRepository.findByStatus("unactive");
         if (contracts_available.isEmpty()) {
             return  "FAILED OPERATION";
         }
         else {
             ContractEntity c = contracts_available.get(0);
-            c.setClient_id(client_id);
+            c.setClientid(clientid);
             c.setStatus("active");
             contractRepository.save(c);
             return "updated";
         }
     }
+
 }

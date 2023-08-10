@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface ContractRepository extends JpaRepository<ContractEntity, Long> {
     List<ContractEntity> findByStatus(String status);
+    List<ContractEntity> findByClientid(int client_id);
 }
