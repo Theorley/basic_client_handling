@@ -128,7 +128,7 @@
                     // Make AJAX call to action2 (updateContract) with the generated client ID
                     $.ajax({
                         url: "/action2",
-                        type: "POST",
+                        type: "PUT",
                         data: { clientId: clientId }, // Pass the generated client ID as a parameter
                         success: function(response) {
                             console.log("Contract updated successfully");
