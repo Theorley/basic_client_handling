@@ -11,11 +11,11 @@ public class NavigationController {
     public String changeToAddClient (){
         return "home";
     }
-    @GetMapping(path = "/addClientPage")
+    @GetMapping(path = "/editClientPage")
     public String changeToEditClient (){
         return "home";
     }
-    @GetMapping(path = "/addClientPage")
+    @GetMapping(path = "/deleteClientPage")
     public String changeToDeleteClient (){
         return "home";
     }

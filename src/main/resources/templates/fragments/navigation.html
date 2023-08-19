@@ -11,7 +11,7 @@
         <ul class="navbar-nav mr-auto">
             <!--            <li class="nav-item" th:class="${#httpServletRequest.requestURI.contains('home')} ? 'nav-link active' : 'nav-link'">-->
             <li class="nav-item" th:class="${activePage == 'info'} ? 'nav-item active' : 'nav-item'">
-                <a class="nav-link" th:href="@{/EditClientPage}">Edit Client</a>
+                <a class="nav-link" th:href="@{/editClientPage}">Edit Client</a>
             </li>
             <!--            <li class="nav-item" th:class="${#httpServletRequest.requestURI.contains('contact')} ? 'nav-link active' : 'nav-link'">-->
             <li class="nav-item" th:class="${activePage == 'contact'} ? 'nav-item active' : 'nav-item'">
