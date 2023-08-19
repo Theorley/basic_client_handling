@@ -33,4 +33,8 @@ public class ContractController {
         model.addAttribute("formData", contract.getNumber());
         return "assignmentGreat";
     }
+    @GetMapping(path = "/contact")
+    public String changeinfo(){
+        return "AddContract";
+    }
 }

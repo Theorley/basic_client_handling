@@ -3,6 +3,10 @@
 <head>
     <title>Contact form</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
     <style>
@@ -91,7 +95,12 @@
       }
     </style>
 </head>
-<body>
+<body class="d-flex flex-column h-100">
+
+<div th:replace="~{fragments/navigation :: header}"> </div>
+
+
+<main role="main" class="flex-shrink-0">
 <div class="main-block">
     <div class="left-part">
         <i class="fas fa-envelope"></i>
@@ -111,6 +120,8 @@
 
 
     </form>
+
+
 
     <script>
 
@@ -145,8 +156,18 @@
             });
         });
     </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+            integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs="
+            crossorigin="anonymous">
+    </script>
+    <script
+            src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js">
+    </script>
 
 
 </div>
+</main>
+
+
 </body>
 </html>
