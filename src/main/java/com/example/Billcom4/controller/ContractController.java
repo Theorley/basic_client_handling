@@ -2,6 +2,7 @@ package com.example.Billcom4.controller;
 
 import com.example.Billcom4.RepositoryLayer.ContractRepository;
 import com.example.Billcom4.ServiceLayer.ContractService;
+import com.example.Billcom4.model.ClientEntity;
 import com.example.Billcom4.model.ContractEntity;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,5 +33,14 @@ public class ContractController {
         model.addAttribute("formData", contract.getNumber());
         return "assignmentGreat";
     }
-
+    @PostMapping(path="/addingContract")
+    public  String addNewContract (@RequestParam("number") String number
+            ,  @RequestParam("status") String status, HttpSession session) {
+        ContractEntity n = new ContractEntity();
+        n.setStatus(status);
+        n.setNumber(number);
+        n.setClientid(0);
+        ContractEntity savedContract = contractRepository.save(n);
+        return "fragments/contractAdded";
+    }
 }

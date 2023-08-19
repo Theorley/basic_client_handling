@@ -8,16 +8,54 @@
           href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
-
-
 </head>
 <body>
 <div th:replace="~{fragments/navigation :: header}"> </div>
 <main role="main" class="flex-shrink-0">
+    <button id="fetchButton">Fetch Clients</button>
+    <div id="clientList"></div>
+    <script>
+        document.getElementById("fetchButton").addEventListener("click", fetchclients);
 
-    <label> this is where you show every client gae</label>
+        function fetchclients() {
+            fetch("/allclients")  // Replace with your actual API endpoint
+                .then(response => response.json())
+                .then(clients => displayclients(clients))
+                .catch(error => console.error("Error fetching clients:", error));
+        }
 
+        function displayclients(clients) {
+            const clientListDiv = document.getElementById("clientList");
+            clientListDiv.innerHTML = "";  // Clear previous content
 
+            clients.forEach(client => {
+                const clientDiv = document.createElement("div");
+                clientDiv.textContent = `${client.id}th client: name: ${client.first_name}|||||||||||||last name :${client.name}||||||||||cin number: ${client.cin}`;
+
+                const deleteButton = document.createElement("button");
+                deleteButton.textContent = "Delete";
+                deleteButton.addEventListener("click", () => deleteClient(client.id));
+
+                clientDiv.appendChild(deleteButton);
+                clientListDiv.appendChild(clientDiv);
+            });
+        }
+
+        function deleteClient(clientId) {
+            fetch(`/client/${clientId}`, {
+                method: 'DELETE'
+            })
+            .then(response => {
+                if (response.ok) {
+                    // Refresh the client list after deletion
+                    fetchclients();
+                } else {
+                    console.error("Error deleting client:", response.statusText);
+                }
+            })
+            .catch(error => console.error("Error deleting client:", error));
+        }
+    </script>
 </main>
 </body>
 </html>
