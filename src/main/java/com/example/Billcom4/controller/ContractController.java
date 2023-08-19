@@ -33,4 +33,5 @@ public class ContractController {
         model.addAttribute("formData", contract.getNumber());
         return "assignmentGreat";
     }
+
 }
