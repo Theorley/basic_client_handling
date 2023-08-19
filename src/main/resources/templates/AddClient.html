@@ -1,25 +1,20 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Contact form</title>
+    <title>Client form</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
     <style>
-      html, body {
-      min-height: 100%;
-      padding: 0;
-      margin: 0;
-      font-family: Roboto, Arial, sans-serif;
-      font-size: 14px;
-      color: #666;
-      }
       h1 {
-      margin: 0 0 20px;
-      font-weight: 400;
-      color: #1c87c9;
+          margin: 20px 20px 20px;
+          font-weight: 400;
+          color: #1c87c9;
+          font-family: Roboto, Arial, sans-serif;
       }
-      p {
+      .p {
       margin: 0 0 5px;
       }
       .main-block {
@@ -69,35 +64,17 @@
       button:hover {
       background: #2371a0;
       }
-      @media (min-width: 568px) {
-      .main-block {
-      flex-direction: row;
-      }
-      .left-part, form {
-      width: 50%;
-      }
-      .fa-envelope {
-      margin-top: 0;
-      margin-left: 20%;
-      }
-      .fa-at {
-      margin-top: -10%;
-      margin-left: 65%;
-      }
-      .fa-mail-bulk {
-      margin-top: 2%;
-      margin-left: 28%;
-      }
-      }
+
     </style>
 </head>
-<body>
+<body class="d-flex flex-column h-100">
+
+<div th:replace="~{fragments/navigation :: header}"> </div>
+
+
+<main role="main" class="flex-shrink-0">
 <div class="main-block">
-    <div class="left-part">
-        <i class="fas fa-envelope"></i>
-        <i class="fas fa-at"></i>
-        <i class="fas fa-mail-bulk"></i>
-    </div>
+
     <form id="myForm" class="form-signin form-inline" action="assignmentGreat" method="post">
         <h1>Add a new client</h1>
         <div class="info">
@@ -111,6 +88,8 @@
 
 
     </form>
+
+
 
     <script>
 
@@ -148,5 +127,8 @@
 
 
 </div>
+</main>
+
+
 </body>
 </html>
