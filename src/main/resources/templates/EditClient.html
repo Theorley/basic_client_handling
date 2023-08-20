@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Client Information</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
+        integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz"
+        crossorigin="anonymous">
+</head>
+<body>
+<div th:replace="~{fragments/navigation :: header}"> </div>
+
+<div class="main-block">
+  <form id="searchForm" class="form-signin form-inline">
+    <h1>Search for a Client</h1>
+    <div class="info">
+      <input class="fname" type="text" id="searchCIN" placeholder="Client CIN">
+    </div>
+    <button class="btn btn-lg btn-primary btn-block" id="searchButton" type="button">Search</button>
+  </form>
+
+  <form id="clientForm" class="form-signin form-inline" style="display: none;">
+    <h1>Edit Client Information</h1>
+    <div class="info">
+      <input class="fname" type="text" id="firstName" placeholder="First Name">
+      <input type="text" id="lastName" placeholder="Last Name">
+      <input type="text" id="clientCIN" placeholder="CIN">
+    </div>
+    <button class="btn btn-lg btn-primary btn-block" id="updateButton" type="button">Update</button>
+  </form>
+</div>
+<script>
+  const searchForm = document.getElementById("searchForm");
+  const clientForm = document.getElementById("clientForm");
+
+  const searchCINInput = document.getElementById("searchCIN");
+  const firstNameInput = document.getElementById("firstName");
+  const lastNameInput = document.getElementById("lastName");
+  const clientCINInput = document.getElementById("clientCIN");
+
+  const searchButton = document.getElementById("searchButton");
+  const updateButton = document.getElementById("updateButton");
+
+  searchButton.addEventListener("click", () => {
+    const cin = searchCINInput.value;
+    fetch(`/client/edit/${cin}`)
+            .then(response => response.json())
+            .then(client => {
+              displayClientInfo(client);
+              clientForm.style.display = "block";
+            })
+            .catch(error => console.error("Error fetching client:", error));
+  });
+
+  function displayClientInfo(client) {
+    firstNameInput.value = client.first_name;
+    lastNameInput.value = client.name;
+    clientCINInput.value = client.cin;
+  }
+
+  updateButton.addEventListener("click", () => {
+    const updatedClient = {
+      first_name: firstNameInput.value,
+      name: lastNameInput.value,
+      cin: clientCINInput.value
+    };
+
+    fetch(`/updateClient/${clientCINInput.value}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(updatedClient)
+    })
+            .then(response => {
+              if (response.ok) {
+                // Show a success message or perform any desired action
+                console.log("Client information updated successfully");
+              } else {
+                console.error("Error updating client information:", response.statusText);
+              }
+            })
+            .catch(error => console.error("Error updating client information:", error));
+  });
+
+
+</script>
+
+</body>
+</html>

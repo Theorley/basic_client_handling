@@ -28,5 +28,10 @@ public class NavigationController {
         model.addAttribute("activePage", "addContractPage");
         return "AddContract";
     }
+    @GetMapping(path = "/editClient")
+    public String changeToEditContract (Model model){
+        model.addAttribute("activePage", "editClientPage");
+        return "EditClient";
+    }
 }
 
