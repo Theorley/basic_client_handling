@@ -18,8 +18,8 @@
                 <a class="nav-link" th:href="@{/addClientPage}">Add Client</a>
             </li>
             <!--            <li class="nav-item" th:class="${#httpServletRequest.requestURI.contains('contact')} ? 'nav-link active' : 'nav-link'">-->
-            <li class="nav-item" th:class="${activePage == 'deleteClientPage'} ? 'nav-item active' : 'nav-item'">
-                <a class="nav-link" th:href="@{/deleteClientPage}">Delete Client</a>
+            <li class="nav-item" th:class="${activePage == 'showContractsPage'} ? 'nav-item active' : 'nav-item'">
+                <a class="nav-link" th:href="@{/showContractsPage}">Show Contracts</a>
             </li>
             <li class="nav-item" th:class="${activePage == 'addContractPage'} ? 'nav-item active' : 'nav-item'">
                 <a class="nav-link" th:href="@{/addContractPage}">Add Contract</a>

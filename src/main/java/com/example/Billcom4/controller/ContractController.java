@@ -6,6 +6,8 @@ import com.example.Billcom4.model.ClientEntity;
 import com.example.Billcom4.model.ContractEntity;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -42,5 +44,18 @@ public class ContractController {
         n.setClientid(0);
         ContractEntity savedContract = contractRepository.save(n);
         return "fragments/contractAdded";
+    }
+    @GetMapping(path="/allcontracts")
+    public @ResponseBody Iterable<ContractEntity> getAllContracts() {
+        return contractRepository.findAll();
+    }
+    @DeleteMapping(path="/contract/{id}")
+    public ResponseEntity<String> deleteContract(@PathVariable int id) {
+        try {
+            contractRepository.deleteById((long) id);
+            return ResponseEntity.ok("Contract deleted successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error deleting contract");
+        }
     }
 }

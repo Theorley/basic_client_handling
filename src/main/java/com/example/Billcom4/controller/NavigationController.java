@@ -18,10 +18,10 @@ public class NavigationController {
         model.addAttribute("activePage", "showClientPage");
         return "showClients";
     }
-    @GetMapping(path = "/deleteClientPage")
-    public String changeToDeleteClient (Model model){
-        model.addAttribute("activePage", "deleteClientPage");
-        return "deleteClient";
+    @GetMapping(path = "/showContractsPage")
+    public String changeToshowContracts (Model model){
+        model.addAttribute("activePage", "showContractsPage");
+        return "showContracts";
     }
     @GetMapping(path = "/addContractPage")
     public String changeToAddContract (Model model){
