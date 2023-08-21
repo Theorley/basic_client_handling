@@ -35,7 +35,7 @@ public class UserController {
     public String loginRequest(@RequestParam String username , @RequestParam String password, Model model){
         if (userService.authenticateUser(username, password)) {
             model.addAttribute("activePage", "addClientPage");
-            return "fragments/dashboard";
+            return "AddClient";
         } else {
             return "successv2";
         }
