@@ -1,168 +1,168 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Client Information</title>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"
-        integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz"
-        crossorigin="anonymous">
+<!--<!DOCTYPE html>-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--  <meta charset="UTF-8">-->
+<!--  <title>Client Information</title>-->
+<!--  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>-->
+<!--  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">-->
+<!--  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css"-->
+<!--        integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz"-->
+<!--        crossorigin="anonymous">-->
 
-  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
-  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-  <style>
-    body {
-      font-family: 'Roboto', sans-serif;
-      background-color: #f4f4f4;
-    }
+<!--  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">-->
+<!--  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>-->
+<!--  <style>-->
+<!--    body {-->
+<!--      font-family: 'Roboto', sans-serif;-->
+<!--      background-color: #f4f4f4;-->
+<!--    }-->
 
-    .main-block {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-    }
+<!--    .main-block {-->
+<!--      display: flex;-->
+<!--      flex-direction: column;-->
+<!--      align-items: center;-->
+<!--      justify-content: center;-->
+<!--      height: 100vh;-->
+<!--    }-->
 
-    .form-signin {
-      background-color: #ffffff;
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      margin: 20px;
-    }
+<!--    .form-signin {-->
+<!--      background-color: #ffffff;-->
+<!--      padding: 20px;-->
+<!--      border-radius: 10px;-->
+<!--      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);-->
+<!--      margin: 20px;-->
+<!--    }-->
 
-    h1 {
-      font-size: 24px;
-      margin-bottom: 20px;
-      color: #333;
-    }
+<!--    h1 {-->
+<!--      font-size: 24px;-->
+<!--      margin-bottom: 20px;-->
+<!--      color: #333;-->
+<!--    }-->
 
-    .info {
-      margin-bottom: 20px;
-    }
+<!--    .info {-->
+<!--      margin-bottom: 20px;-->
+<!--    }-->
 
-    input {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 10px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-    }
+<!--    input {-->
+<!--      width: 100%;-->
+<!--      padding: 10px;-->
+<!--      margin-bottom: 10px;-->
+<!--      border: 1px solid #ccc;-->
+<!--      border-radius: 5px;-->
+<!--    }-->
 
-    .btn-block {
-      width: 100%;
-      background-color: #007bff;
-      color: #fff;
-      border: none;
-      padding: 10px;
-      border-radius: 5px;
-      cursor: pointer;
-    }
+<!--    .btn-block {-->
+<!--      width: 100%;-->
+<!--      background-color: #007bff;-->
+<!--      color: #fff;-->
+<!--      border: none;-->
+<!--      padding: 10px;-->
+<!--      border-radius: 5px;-->
+<!--      cursor: pointer;-->
+<!--    }-->
 
-    .btn-block:hover {
-      background-color: #0056b3;
-    }
+<!--    .btn-block:hover {-->
+<!--      background-color: #0056b3;-->
+<!--    }-->
 
-     .navbar-dark .navbar-nav .nav-link {
-            color: black;
-        }
+<!--     .navbar-dark .navbar-nav .nav-link {-->
+<!--            color: black;-->
+<!--        }-->
 
-        .navbar-dark .navbar-nav .nav-link:hover {
-            color: #1c87c9;
-        }
+<!--        .navbar-dark .navbar-nav .nav-link:hover {-->
+<!--            color: white;-->
+<!--        }-->
 
-        .navbar-dark .navbar-nav .nav-item.active .nav-link {
-            background-color: #1c87c9;
-        }
+<!--        .navbar-dark .navbar-nav .nav-item.active .nav-link {-->
+<!--            background-color: #1c87c9;-->
+<!--        }-->
 
-  </style>
-</head>
-<body>
+<!--  </style>-->
+<!--</head>-->
+<!--<body>-->
 
-<div th:replace="~{fragments/navigation :: header}"> </div>
-
-
-<!-- alert box -->
-<div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel"
-     aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="errorModalLabel">Error</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        <p id="errorText"></p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
+<!--<div th:replace="~{fragments/navigation :: header}"> </div>-->
 
 
-
-
-<div class="main-block">
-  <form id="searchForm" class="form-signin">
-    <h1>Search for a Client</h1>
-    <div class="info">
-      <input class="fname" type="text" id="searchCIN" placeholder="Client CIN">
-    </div>
-    <button class="btn btn-lg btn-block" id="searchButton" type="button">Search</button>
-  </form>
-
-  <form id="clientForm" class="form-signin" style="display: none;">
-    <h1>Edit Client Information</h1>
-    <div class="info">
-      <input class="fname" type="text" id="firstName" placeholder="First Name">
-      <input type="text" id="lastName" placeholder="Last Name">
-      <input type="text" id="clientCIN" placeholder="CIN">
-    </div>
-    <button class="btn btn-lg btn-block" id="updateButton" type="button">Update</button>
-  </form>
-</div>
+<!--&lt;!&ndash; alert box &ndash;&gt;-->
+<!--<div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel"-->
+<!--     aria-hidden="true">-->
+<!--  <div class="modal-dialog" role="document">-->
+<!--    <div class="modal-content">-->
+<!--      <div class="modal-header">-->
+<!--        <h5 class="modal-title" id="errorModalLabel">Error</h5>-->
+<!--        <button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
+<!--          <span aria-hidden="true">&times;</span>-->
+<!--        </button>-->
+<!--      </div>-->
+<!--      <div class="modal-body">-->
+<!--        <p id="errorText"></p>-->
+<!--      </div>-->
+<!--      <div class="modal-footer">-->
+<!--        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
 
 
 
-<script>
-  const searchForm = document.getElementById("searchForm");
-  const clientForm = document.getElementById("clientForm");
 
-  const searchCINInput = document.getElementById("searchCIN");
-  const firstNameInput = document.getElementById("firstName");
-  const lastNameInput = document.getElementById("lastName");
-  const clientCINInput = document.getElementById("clientCIN");
+<!--<div class="main-block">-->
+<!--  <form id="searchForm" class="form-signin">-->
+<!--    <h1>Search for a Client</h1>-->
+<!--    <div class="info">-->
+<!--      <input class="fname" type="text" id="searchCIN" placeholder="Client CIN">-->
+<!--    </div>-->
+<!--    <button class="btn btn-lg btn-block" id="searchButton" type="button">Search</button>-->
+<!--  </form>-->
 
-  const searchButton = document.getElementById("searchButton");
-  const updateButton = document.getElementById("updateButton");
+<!--  <form id="clientForm" class="form-signin" style="display: none;">-->
+<!--    <h1>Edit Client Information</h1>-->
+<!--    <div class="info">-->
+<!--      <input class="fname" type="text" id="firstName" placeholder="First Name">-->
+<!--      <input type="text" id="lastName" placeholder="Last Name">-->
+<!--      <input type="text" id="clientCIN" placeholder="CIN">-->
+<!--    </div>-->
+<!--    <button class="btn btn-lg btn-block" id="updateButton" type="button">Update</button>-->
+<!--  </form>-->
+<!--</div>-->
 
-  searchButton.addEventListener("click", () => {
-    const cin = searchCINInput.value;
-    fetch(`/client/edit/${cin}`)
-            .then(response => response.json())
-            .then(client => {
-              displayClientInfo(client);
-              clientForm.style.display ="block";
-              clearErrorModal();
-            })
-            .catch(error => {
-              console.error("Error fetching client:", error);
-              clientForm.style.display ="none";
-              displayErrorModal("Client not found");
-            });
-  });
 
-  function displayClientInfo(client) {
-    firstNameInput.value = client.first_name;
-    lastNameInput.value = client.name;
-    clientCINInput.value = client.cin;
-  }
+
+<!--<script>-->
+<!--  const searchForm = document.getElementById("searchForm");-->
+<!--  const clientForm = document.getElementById("clientForm");-->
+
+<!--  const searchCINInput = document.getElementById("searchCIN");-->
+<!--  const firstNameInput = document.getElementById("firstName");-->
+<!--  const lastNameInput = document.getElementById("lastName");-->
+<!--  const clientCINInput = document.getElementById("clientCIN");-->
+
+<!--  const searchButton = document.getElementById("searchButton");-->
+<!--  const updateButton = document.getElementById("updateButton");-->
+
+<!--  searchButton.addEventListener("click", () => {-->
+<!--    const cin = searchCINInput.value;-->
+<!--    fetch(`/client/edit/${cin}`)-->
+<!--            .then(response => response.json())-->
+<!--            .then(client => {-->
+<!--              displayClientInfo(client);-->
+<!--              clientForm.style.display ="block";-->
+<!--              clearErrorModal();-->
+<!--            })-->
+<!--            .catch(error => {-->
+<!--              console.error("Error fetching client:", error);-->
+<!--              clientForm.style.display ="none";-->
+<!--              displayErrorModal("Client not found");-->
+<!--            });-->
+<!--  });-->
+
+<!--  function displayClientInfo(client) {-->
+<!--    firstNameInput.value = client.first_name;-->
+<!--    lastNameInput.value = client.name;-->
+<!--    clientCINInput.value = client.cin;-->
+<!--  }-->
 
   updateButton.addEventListener("click", () => {
     const updatedClient = {
@@ -180,7 +180,6 @@
     })
             .then(response => {
               if (response.ok) {
-                // Show a success message or perform any desired action
                 console.log("Client information updated successfully");
               } else {
                 console.error("Error updating client information:", response.statusText);
@@ -189,23 +188,23 @@
             .catch(error => console.error("Error updating client information:", error));
   });
 
-  const errorTextElement = document.getElementById("errorText");
+<!--  const errorTextElement = document.getElementById("errorText");-->
 
-  function displayErrorModal(message) {
-    errorTextElement.textContent = message;
-    $("#errorModal").modal("show");
-  }
+<!--  function displayErrorModal(message) {-->
+<!--    errorTextElement.textContent = message;-->
+<!--    $("#errorModal").modal("show");-->
+<!--  }-->
 
-  function clearErrorModal() {
-    errorTextElement.textContent = "";
-    $("#errorModal").modal("hide");
-  }
-
-
-</script>
-
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<!--  function clearErrorModal() {-->
+<!--    errorTextElement.textContent = "";-->
+<!--    $("#errorModal").modal("hide");-->
+<!--  }-->
 
 
-</body>
-</html>
+<!--</script>-->
+
+<!--<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>-->
+
+
+<!--</body>-->
+<!--</html>-->
