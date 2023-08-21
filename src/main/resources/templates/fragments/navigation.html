@@ -2,14 +2,14 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Spring MVC</title>
+    <title>NAVIGATION BAR</title>
     <style>
     </style>
 </head>
 <body>
 <div >
     <nav class="navbar navbar-expand-md navbar-dark bg-dark" th:fragment="header">
-        <a class="navbar-brand" th:href="@{/}" style="color:red" >
+        <a class="navbar-brand" th:href="@{/}" style="color: #1c87c9" >
             <i class="fas fa-sign-out-alt"></i>
         </a>
 
@@ -20,15 +20,12 @@
 
         <div class="collapse navbar-collapse" id="navbarsExample04" >
             <ul class="navbar-nav mr-auto">
-                <!--            <li class="nav-item" th:class="${#httpServletRequest.requestURI.contains('home')} ? 'nav-link active' : 'nav-link'">-->
                 <li class="nav-item" th:class="${activePage == 'showClientPage'} ? 'nav-item active' : 'nav-item'">
                     <a class="nav-link" id="showclinetstab" th:href="@{/showClientPage}">Show Clients</a>
                 </li>
-                <!--            <li class="nav-item" th:class="${#httpServletRequest.requestURI.contains('contact')} ? 'nav-link active' : 'nav-link'">-->
                 <li class="nav-item" th:class="${activePage == 'addClientPage'} ? 'nav-item active' : 'nav-item'">
                     <a class="nav-link" id="addclinetstab" th:href="@{/addClientPage}">Add Client</a>
                 </li>
-                <!--            <li class="nav-item" th:class="${#httpServletRequest.requestURI.contains('contact')} ? 'nav-link active' : 'nav-link'">-->
                 <li class="nav-item" th:class="${activePage == 'showContractsPage'} ? 'nav-item active' : 'nav-item'">
                     <a class="nav-link" id="showcontractstab" th:href="@{/showContractsPage}">Show Contracts</a>
                 </li>
