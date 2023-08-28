@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class ContractController {
@@ -57,5 +58,29 @@ public class ContractController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error deleting contract");
         }
+    }
+    @GetMapping("/contract/edit/{contractid}")
+    public @ResponseBody
+    ContractEntity getClientById(@PathVariable String contractid) {
+        Optional<ContractEntity> optionalContract = contractRepository.findById(Long.parseLong(contractid));
+        return optionalContract.orElse(null);
+    }
+    @PutMapping("/updateContract/{contractid}")
+    public ResponseEntity<String> updateContract(@PathVariable String contractid, @RequestBody ContractEntity updatedClient) {
+        Optional<ContractEntity> existingClientOptional = contractRepository.findById(Long.parseLong(contractid));
+
+        if (existingClientOptional.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        // Update the existing client with new data
+        ContractEntity existingClient = existingClientOptional.get();
+        existingClient.setClientid(updatedClient.getClientid());
+        existingClient.setNumber(updatedClient.getNumber());
+        existingClient.setStatus(updatedClient.getStatus());
+
+        contractRepository.save(existingClient);
+
+        return ResponseEntity.ok("Client information updated successfully");
     }
 }

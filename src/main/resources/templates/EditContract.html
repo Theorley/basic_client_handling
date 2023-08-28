@@ -109,20 +109,20 @@
 
 
 <div class="main-block">
-  <form id="searchForm" class="form-signin">
-    <h1>Search for a Client</h1>
+  <form id="searchForm2" class="form-signin">
+    <h1>Search for a Contract</h1>
     <div class="info">
-      <input class="fname" type="text" id="searchCIN" placeholder="Client CIN">
+      <input class="fname" type="text" id="searchContractId" placeholder="ContractId">
     </div>
     <button class="btn btn-lg btn-block" id="searchButton" type="button">Search</button>
   </form>
 
-  <form id="clientForm" class="form-signin" style="display: none;">
+  <form id="Contractform" class="form-signin" style="display: none;">
     <h1>Edit Client Information</h1>
     <div class="info">
-      <input class="fname" type="text" id="firstName" placeholder="First Name">
-      <input type="text" id="lastName" placeholder="Last Name">
-      <input type="text" id="clientCIN" placeholder="CIN">
+      <input class="fname" type="text" id="Status" placeholder="Status">
+      <input type="text" id="number" placeholder="Number">
+      <input type="text" id="clientid" placeholder="ClientId">
     </div>
     <button class="btn btn-lg btn-block" id="updateButton" type="button">Update</button>
   </form>
@@ -131,47 +131,47 @@
 
 
 <script>
-  const searchForm = document.getElementById("searchForm");
-  const clientForm = document.getElementById("clientForm");
+  const searchForm = document.getElementById("searchForm2");
+  const clientForm = document.getElementById("Contractform");
 
-  const searchCINInput = document.getElementById("searchCIN");
-  const firstNameInput = document.getElementById("firstName");
-  const lastNameInput = document.getElementById("lastName");
-  const clientCINInput = document.getElementById("clientCIN");
+  const searchContractIdInput = document.getElementById("searchContractId");
+  const statusInput = document.getElementById("Status");
+  const numberInput = document.getElementById("number");
+  const clientIdInput = document.getElementById("clientid");
 
   const searchButton = document.getElementById("searchButton");
   const updateButton = document.getElementById("updateButton");
 
   searchButton.addEventListener("click", () => {
-    const cin = searchCINInput.value;
-    fetch(`/client/edit/${cin}`)
+    const contractid = searchContractIdInput.value;
+    fetch(`/contract/edit/${contractid}`)
             .then(response => response.json())
-            .then(client => {
-              displayClientInfo(client);
+            .then(contract => {
+              displayContractInfo(contract);
               clientForm.style.display ="block";
               clearErrorModal();
             })
             .catch(error => {
-              console.error("Error fetching client:", error);
+              console.error("Error fetching contract:", error);
               clientForm.style.display ="none";
               displayErrorModal("Client not found");
             });
   });
 
-  function displayClientInfo(client) {
-    firstNameInput.value = client.first_name;
-    lastNameInput.value = client.name;
-    clientCINInput.value = client.cin;
+  function displayContractInfo(contract) {
+    statusInput.value = contract.status;
+    numberInput.value = contract.number;
+    clientIdInput.value = contract.clientId;
   }
 
   updateButton.addEventListener("click", () => {
     const updatedClient = {
-      first_name: firstNameInput.value,
-      name: lastNameInput.value,
-      cin: clientCINInput.value
+      status: statusInput.value,
+      number: numberInput.value,
+      clientId: clientIdInput.value
     };
 
-    fetch(`/updateClient/${clientCINInput.value}`, {
+    fetch(`/updateContract/${searchContractIdInput.value}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
