@@ -59,124 +59,146 @@
         <tbody id="clientList"></tbody>
     </table>
     <script>
-        var clicked;
-        var checked;
-        var editing=false;
-        document.getElementById("fetchButton").addEventListener("click", fetchClients);
-        function fetchClients() {
-            fetch("/allclients")
-                .then(response => response.json())
-                .then(clients => displayClients(clients))
-                .catch(error => console.error("Error fetching clients:", error));
-        }
+     var clicked;
+var checked;
+var editing = false;
+document.getElementById("fetchButton").addEventListener("click", fetchClients);
+function fetchClients() {
+  fetch("/allclients")
+    .then((response) => response.json())
+    .then((clients) => displayClients(clients))
+    .catch((error) => console.error("Error fetching clients:", error));
+}
 
-        function displayClients(clients) {
-            const clientListTable = document.getElementById("clientList");
-            clientListTable.innerHTML = "";
-            clients.forEach(client => {
-                 clicked=false;
-                 checked=false;
-                const row = clientListTable.insertRow();
-                const idCell = row.insertCell(0);
-                const firstNameCell = row.insertCell(1);
-                const lastNameCell = row.insertCell(2);
-                const cinCell = row.insertCell(3);
-                const actionCell = row.insertCell(4);
+function displayClients(clients) {
+  const clientListTable = document.getElementById("clientList");
+  clientListTable.innerHTML = "";
+  clients.forEach((client) => {
+    clicked = false;
+    checked = false;
+    const row = clientListTable.insertRow();
+    const idCell = row.insertCell(0);
+    const firstNameCell = row.insertCell(1);
+    const lastNameCell = row.insertCell(2);
+    const cinCell = row.insertCell(3);
+    const actionCell = row.insertCell(4);
 
-                idCell.textContent = client.id;
-                firstNameCell.textContent = client.first_name;
-                lastNameCell.textContent = client.name;
-                cinCell.textContent = client.cin;
+    idCell.textContent = client.id;
+    firstNameCell.textContent = client.first_name;
+    lastNameCell.textContent = client.name;
+    cinCell.textContent = client.cin;
 
-                const deleteButton = document.createElement("button");
-                deleteButton.textContent = "Delete";
-                deleteButton.addEventListener("click", () => deleteClient(client.id));
-                actionCell.appendChild(deleteButton);
+    const deleteButton = document.createElement("button");
+    deleteButton.textContent = "Delete";
+    deleteButton.addEventListener("click", () => deleteClient(client.id));
+    actionCell.appendChild(deleteButton);
 
-                console.log(clicked);
-                if(clicked==false){
-                clicked=true;
-                const updateButton = document.createElement("button");
-                updateButton.textContent = "Update";
+    console.log(clicked);
+    if (clicked == false) {
+      clicked = true;
+      const updateButton = document.createElement("button");
+      updateButton.textContent = "Update";
 
-                updateButton.addEventListener("click", () => updateClient(client,firstNameCell,lastNameCell,cinCell,actionCell,editing));
+      updateButton.addEventListener("click", () =>
+        updateClient(
+          client,
+          firstNameCell,
+          lastNameCell,
+          cinCell,
+          actionCell,
+          editing
+        )
+      );
 
-                 actionCell.appendChild(updateButton);
-                }
-            });
-        }
-
-        function deleteClient(clientId) {
-            fetch(`/client/delete/${clientId}`, {
-                method: 'DELETE'
-            })
-            .then(response => {
-                if (response.ok) {
-                    fetchClients();
-                } else {
-                    console.error("Error deleting client:", response.statusText);
-                }
-            })
-            .catch(error => console.error("Error deleting client:", error));
-        }
-        function updateClient(client,firstNameCell,lastNameCell,cinCell,actionCell,editing){
-        if(editing==false){
-                editing=true;
-        firstNameCell.innerHTML = '';
-       const a=createEditableInput(client.first_name)
-            firstNameCell.appendChild(a);
-       const b=createEditableInput(client.name);
-            lastNameCell.innerHTML = '';
-            lastNameCell.appendChild(b);
-            cinCell.innerHTML = '';
-        const  c=createEditableInput(client.cin);
-            cinCell.appendChild(c);
-            if(checked==false){
-            const saveButton = document.createElement("button");
-                saveButton.textContent = "Save";
-                checked=true;
-                saveButton.addEventListener("click", () => {
-                checked=false;
-    const updatedClient = {
-      first_name: a.value,
-      name: b.value,
-      cin: c.value
-    };
-
-    fetch(`/updateClient/${c.value}`, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(updatedClient)
-    })
-            .then(response => {
-              if (response.ok) {
-                console.log("Client information updated successfully");
-              } else {
-                console.error("Error updating client information:", response.statusText);
-              }
-            })
-            .catch(error => console.error("Error updating client information:", error));
+      actionCell.appendChild(updateButton);
+    }
   });
-                actionCell.appendChild(saveButton);}}
-        }
-        function createEditableInput(value) {
-    const input = document.createElement("input");
-    input.type = "text";
-    input.value = value;
-    return input;
+}
+
+function deleteClient(clientId) {
+  fetch(`/client/delete/${clientId}`, {
+    method: "DELETE",
+  })
+    .then((response) => {
+      if (response.ok) {
+        fetchClients();
+      } else {
+        console.error("Error deleting client:", response.statusText);
+      }
+    })
+    .catch((error) => console.error("Error deleting client:", error));
+}
+function updateClient(
+  client,
+  firstNameCell,
+  lastNameCell,
+  cinCell,
+  actionCell,
+  editing
+) {
+  if (editing == false) {
+    editing = true;
+    firstNameCell.innerHTML = "";
+    const a = createEditableInput(client.first_name);
+    firstNameCell.appendChild(a);
+    const b = createEditableInput(client.name);
+    lastNameCell.innerHTML = "";
+    lastNameCell.appendChild(b);
+    const c = createEditableInput(client.cin);
+    if (checked == false) {
+      const saveButton = document.createElement("button");
+      saveButton.textContent = "Save";
+      checked = true;
+      saveButton.addEventListener("click", () => {
+        checked = false;
+        const updatedClient = {
+          first_name: a.value,
+          name: b.value,
+          cin: c.value,
+        };
+
+        fetch(`/updateClient/${c.value}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(updatedClient),
+        })
+          .then((response) => {
+            if (response.ok) {
+              console.log("Client information updated successfully");
+            } else {
+              console.error(
+                "Error updating client information:",
+                response.statusText
+              );
+            }
+          })
+          .catch((error) =>
+            console.error("Error updating client information:", error)
+          );
+fetchClients();      });
+      actionCell.appendChild(saveButton);
+    }
+  }
+}
+function createEditableInput(value) {
+  const input = document.createElement("input");
+  input.type = "text";
+  input.value = value;
+  return input;
 }
 
 const errorTextElement = document.getElementById("errorText");
 function displayErrorModal(message) {
-    errorTextElement.textContent = message;
-    $("#errorModal").modal("show");
+  errorTextElement.textContent = message;
+  $("#errorModal").modal("show");
 }
 function clearErrorModal() {
-    errorTextElement.textContent = "";
-    $("#errorModal").modal("hide");
+  errorTextElement.textContent = "";
+  $("#errorModal").modal("hide");
 }
+
     </script>
 </main>
 </body>
