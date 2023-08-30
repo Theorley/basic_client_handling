@@ -2,21 +2,208 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>show clients</title>
+    <title>Show Clients</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet"
           href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
-
-
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Roboto', sans-serif;
+        }
+        .navbar-dark .navbar-nav .nav-link {
+            color: black;
+        }
+        .navbar-dark .navbar-nav .nav-link:hover {
+            color: white;
+        }
+        .navbar-dark .navbar-nav .nav-item.active .nav-link {
+            background-color: #1c87c9;
+            border-radius: 15px;
+        }
+        .container {
+            margin-top: 30px;
+        }
+        .table {
+            background-color: white;
+        }
+        th {
+            background-color: #1c87c9;
+            color: white;
+        }
+        .btn {
+            color: white;
+            background-color: #1c87c9;
+            border: none;
+        }
+        .btn:hover {
+            background-color: #155b82;
+        }
+    </style>
 </head>
 <body>
 <div th:replace="~{fragments/navigation :: header}"> </div>
-<main role="main" class="flex-shrink-0">
+<main role="main" class="flex-shrink-0" >
+    <button id="fetchButton">Fetch Clients</button>
 
-    <label> this is where you show every client gae</label>
+    <table class="table">
+        <thead>
+        <div class="container" id="container"></div>
 
+
+        <tr>
+            <th>ID</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>CIN Number</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody id="clientList">
+
+        </tbody>
+
+    </table>
+
+    <script>
+var clicked = {theValue : false};
+    var barContainer = document.querySelector('#container');
+var currentlyEditing = {theValue: false};
+document.getElementById("fetchButton").addEventListener("click", fetchClients);
+function fetchClients() {
+  fetch("/allclients")
+    .then((response) => response.json())
+    .then((clients) => displayClients(clients))
+    .catch((error) => console.error("Error fetching clients:", error));
+}
+
+function displayClients(clients) {
+  const clientListTable = document.getElementById("clientList");
+  clientListTable.innerHTML = "";
+  clients.forEach((client) => {
+
+    const row = clientListTable.insertRow();
+    const idCell = row.insertCell(0);
+    const firstNameCell = row.insertCell(1);
+    const lastNameCell = row.insertCell(2);
+    const cinCell = row.insertCell(3);
+    const actionCell = row.insertCell(4);
+
+    idCell.textContent = client.id;
+    firstNameCell.textContent = client.first_name;
+    lastNameCell.textContent = client.name;
+    cinCell.textContent = client.cin;
+
+    const deleteButton = document.createElement("button");
+    deleteButton.textContent = "Delete";
+    deleteButton.addEventListener("click", () => deleteClient(client.id));
+    actionCell.appendChild(deleteButton);
+
+      const updateButton = document.createElement("button");
+      updateButton.textContent = "Update";
+      updateButton.addEventListener("click", () => {
+          if (currentlyEditing.theValue == false)
+          {
+              currentlyEditing.theValue=true;
+              const saveButton = document.createElement("button");
+              saveButton.textContent = "Save";
+              actionCell.appendChild(saveButton);
+              updateClient(client, firstNameCell, lastNameCell, saveButton,currentlyEditing);
+          }
+
+          }
+      );
+      actionCell.appendChild(updateButton);
+
+  });
+}
+
+function deleteClient(clientId) {
+  fetch(`/client/delete/${clientId}`, {
+    method: "DELETE",
+  })
+    .then((response) => {
+      if (response.ok) {
+        fetchClients();
+      } else {
+        console.error("Error deleting client:", response.statusText);
+      }
+    })
+    .catch((error) => console.error("Error deleting client:", error));
+}
+function updateClient(client, firstNameCell, lastNameCell, saveButton ,currentlyEditing){
+
+    firstNameCell.innerHTML = "";
+    const a = createEditableInput(client.first_name);
+    firstNameCell.appendChild(a);
+    const b = createEditableInput(client.name);
+    lastNameCell.innerHTML = "";
+    lastNameCell.appendChild(b);
+    const c = createEditableInput(client.cin);
+    saveButton.addEventListener("click", () => {
+        const updatedClient =
+            {
+                first_name: a.value,
+                name: b.value,
+                cin: c.value,
+            };
+
+        fetch(`/updateClient/${c.value}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(updatedClient),
+        })
+          .then((response) => {
+            if (response.ok) {
+              console.log("Client information updated successfully");
+            } else {
+              console.error(
+                "Error updating client information:",
+                response.statusText
+              );
+            }
+          })
+          .catch((error) =>
+            console.error("Error updating client information:", error)
+          );
+        window.setTimeout(fetchClients,2000);
+        var bar = new ProgressBar.Line('#container', {
+        color: '#1c87c9',
+        duration: 2000,
+        easing: 'easeInOut'
+    });
+        bar.animate(1);
+        currentlyEditing.theValue=false;
+window.setTimeout(foo,2000,bar);});
+function foo(bar){
+bar.destroy();}
+
+
+}
+function createEditableInput(value) {
+  const input = document.createElement("input");
+  input.type = "text";
+  input.value = value;
+  return input;
+}
+
+const errorTextElement = document.getElementById("errorText");
+function displayErrorModal(message) {
+  errorTextElement.textContent = message;
+  $("#errorModal").modal("show");
+}
+function clearErrorModal() {
+  errorTextElement.textContent = "";
+  $("#errorModal").modal("hide");
+}
+
+    </script>
+    <script src="https://cdn.rawgit.com/kimmobrunfeldt/progressbar.js/0.6.1/dist/progressbar.js"></script>
+    <script src="https://cdn.rawgit.com/dropbox/zxcvbn/v1.0/zxcvbn.js"></script>
 
 </main>
 </body>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>show clients</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #f0f3f7;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .navbar-dark .navbar-nav .nav-link {
+            color: black;
+        }
+
+        .navbar-dark .navbar-nav .nav-link:hover {
+            color: white;
+        }
+
+        .navbar-dark .navbar-nav .nav-item.active .nav-link {
+            background-color: #1c87c9;
+            border-radius: 15px;
+        }
+
+        .container {
+            margin-top: 30px;
+        }
+
+        .table {
+            background-color: white;
+        }
+
+        th {
+            background-color: #1c87c9;
+            color: white;
+        }
+
+        .btn {
+            color: white;
+            background-color: #1c87c9;
+            border: none;
+        }
+
+        .btn:hover {
+            background-color: #155b82;
+        }
+    </style>
+</head>
+<body>
+<div th:replace="~{fragments/navigation :: header}"> </div>
+
+    <main role="main" class="flex-shrink-0" >
+        <button id="fetchButton">Fetch Contracts</button>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Status</th>
+                <th>Number</th>
+                <th>Client id</th>
+                <th> </th>
+            </tr>
+            </thead>
+            <tbody id="contractsList"></tbody>
+        </table>
+        <script>
+        document.getElementById("fetchButton").addEventListener("click", fetchContracts);
+
+        function fetchContracts() {
+            fetch("/allcontracts")  // Replace with your actual API endpoint
+                .then(response => response.json())
+                .then(contracts => displayContracts(contracts))
+                .catch(error => console.error("Error fetching contracts:", error));
+        }
+
+        function displayContracts(contracts) {
+            const contractListTable = document.getElementById("contractsList");
+            contractListTable.innerHTML = "";  // Clear previous content
+
+            contracts.forEach(contract => {
+                const row = contractListTable.insertRow();
+                const idCell = row.insertCell(0);
+                const statusCell = row.insertCell(1);
+                const numberCell = row.insertCell(2);
+                const clientidCell = row.insertCell(3);
+                const actionCell = row.insertCell(4);
+
+                idCell.textContent = contract.id;
+                statusCell.textContent = contract.status;
+                numberCell.textContent = contract.number;
+                clientidCell.textContent = contract.clientid;
+
+                const deleteButton = document.createElement("button");
+                deleteButton.textContent = "Delete";
+                deleteButton.addEventListener("click", () => deleteContract(contract.id));
+                actionCell.appendChild(deleteButton);
+            });
+        }
+
+        function deleteContract(contractId) {
+            fetch(`/contract/${contractId}`, {
+                method: 'DELETE'
+            })
+            .then(response => {
+                if (response.ok) {
+                    // Refresh the client list after deletion
+                    fetchContracts();
+                } else {
+                    console.error("Error deleting contract:", response.statusText);
+                }
+            })
+            .catch(error => console.error("Error deleting contract:", error));
+        }
+    </script>
+    </main>
+
+
+</body>
+</html>

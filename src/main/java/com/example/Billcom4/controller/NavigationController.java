@@ -11,17 +11,32 @@ public class NavigationController {
     @GetMapping(path = "/addClientPage")
     public String changeToAddClient (Model model){
         model.addAttribute("activePage", "addClientPage");
-        return "home";
+        return "AddClient";
     }
     @GetMapping(path = "/showClientPage")
-    public String changeToEditClient (Model model){
+    public String changeToShowClient (Model model){
         model.addAttribute("activePage", "showClientPage");
         return "showClients";
     }
-    @GetMapping(path = "/deleteClientPage")
-    public String changeToDeleteClient (Model model){
-        model.addAttribute("activePage", "deleteClientPage");
-        return "deleteClient";
+    @GetMapping(path = "/showContractsPage")
+    public String changeToshowContracts (Model model){
+        model.addAttribute("activePage", "showContractsPage");
+        return "showContracts";
+    }
+    @GetMapping(path = "/addContractPage")
+    public String changeToAddContract (Model model){
+        model.addAttribute("activePage", "addContractPage");
+        return "AddContract";
+    }
+    @GetMapping(path = "/editClient")
+    public String changeToEditClient (Model model){
+        model.addAttribute("activePage", "editClientPage");
+        return "EditClient";
+    }
+    @GetMapping(path = "/editContract")
+    public String changeToEditContract (Model model){
+        model.addAttribute("activePage", "editContractPage");
+        return "EditContract";
     }
 }
 

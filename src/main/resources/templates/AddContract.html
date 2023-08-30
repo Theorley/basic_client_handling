@@ -1,31 +1,120 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" class="h-100">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Spring MVC</title>
+    <title>show clients</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet"
           href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+
+    <style>
+   .navbar-dark .navbar-nav .nav-link {
+            color: black;
+        }
+
+        .navbar-dark .navbar-nav .nav-link:hover {
+            color: white;
+        }
+
+        .navbar-dark .navbar-nav .nav-item.active .nav-link {
+            background-color: #1c87c9;
+            border-radius: 15px;
+        }
+
+      h1 {
+          margin: 20px 20px 20px;
+          font-weight: 400;
+          color: #1c87c9;
+          font-family: Roboto, Arial, sans-serif;
+      }
+      .p {
+      margin: 0 0 5px;
+      }
+      .main-block {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: #1c87c9;
+      }
+      form {
+      padding: 25px;
+      margin: 25px;
+      box-shadow: 0 2px 5px #f5f5f5;
+      background: #f5f5f5;
+      }
+
+      .fa-envelope {
+      transform: rotate(-20deg);
+      }
+      .fa-at , .fa-mail-bulk{
+      transform: rotate(10deg);
+      }
+      input, textarea {
+      width: calc(100% - 18px);
+      padding: 8px;
+      margin-bottom: 20px;
+          border-radius: 15px;
+      border: 1px solid #1c87c9;
+      outline: none;
+      }
+      input::placeholder {
+      color: #666;
+      }
+      button {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      background: #1c87c9;
+      font-size: 16px;
+      font-weight: 400;
+      color: #fff;
+      }
+      button:hover {
+      background: #2371a0;
+      }
+
+    </style>
+
 </head>
-<body class="d-flex flex-column h-100">
-
-<div th:replace="~{fragments/navigation :: header}"></div>
-
+<body>
+<div th:replace="~{fragments/navigation :: header}"> </div>
 <main role="main" class="flex-shrink-0">
-    <div class="container mt-5">
-        <div class="jumbotron">
-            <h1 class="display-4">Contact</h1>
-        </div>
+
+    <div class="main-block">
+
+        <form id="myForm" class="form-signin form-inline" action="/addingContract" method="post" onsubmit="return validateForm()">
+            <h1>Add a new contract</h1>
+            <div class="info">
+                <input class="fname" type="text" name="number" id="number" placeholder="Number">
+                <input type="text" name="status" placeholder="Status" id="status">
+
+            </div>
+
+            <button class="btn btn-lg btn-primary btn-block" id="special-button" type="submit" >Submit</button>
+
+
+        </form>
+
     </div>
+
+
 </main>
-
-
-
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-        integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs="
-        crossorigin="anonymous">
-</script>
-<script
-        src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.bundle.min.js">
-</script>
 </body>
+<script>
+   function validateForm() {
+    var status = document.getElementById("status").value;
+
+    if (!(status === "unactive" || status === "active")) {
+        alert('Please set status to "unactive" or "active"');
+        return false; // Prevent form submission
+    }
+
+
+    return true;
+}
+</script>
 </html>

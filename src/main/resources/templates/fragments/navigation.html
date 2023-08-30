@@ -2,34 +2,48 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Spring MVC</title>
+    <title>NAVIGATION BAR</title>
+    <style>
+    </style>
 </head>
 <body>
-<nav class="navbar navbar-expand-md navbar-dark bg-dark" th:fragment="header">
-    <a class="navbar-brand" th:href="@{/}">LogOut</a>
-
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample04"
-            aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
+<div >
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark" th:fragment="header">
+        <a class="navbar-brand" th:href="@{/}" style="color: #1c87c9" >
+            <i class="fas fa-sign-out-alt"></i>
+        </a>
 
 
-    <div class="collapse navbar-collapse" id="navbarsExample04">
-        <ul class="navbar-nav mr-auto">
-            <!--            <li class="nav-item" th:class="${#httpServletRequest.requestURI.contains('home')} ? 'nav-link active' : 'nav-link'">-->
-            <li class="nav-item" th:class="${activePage == 'showClientPage'} ? 'nav-item active' : 'nav-item'">
-                <a class="nav-link" th:href="@{/showClientPage}">Show Clients</a>
-            </li>
-            <!--            <li class="nav-item" th:class="${#httpServletRequest.requestURI.contains('contact')} ? 'nav-link active' : 'nav-link'">-->
-            <li class="nav-item" th:class="${activePage == 'addClientPage'} ? 'nav-item active' : 'nav-item'">
-                <a class="nav-link" th:href="@{/addClientPage}">Add Client</a>
-            </li>
-            <!--            <li class="nav-item" th:class="${#httpServletRequest.requestURI.contains('contact')} ? 'nav-link active' : 'nav-link'">-->
-            <li class="nav-item" th:class="${activePage == 'deleteClientPage'} ? 'nav-item active' : 'nav-item'">
-                <a class="nav-link" th:href="@{/deleteClientPage}">Delete Client</a>
-            </li>
-        </ul>
-    </div>
-</nav>
+
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample04"
+                aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation"  style="background-color:red">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarsExample04" >
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item" th:class="${activePage == 'showClientPage'} ? 'nav-item active' : 'nav-item'">
+                    <a class="nav-link" id="showclinetstab" th:href="@{/showClientPage}">Show Clients</a>
+                </li>
+                <li class="nav-item" th:class="${activePage == 'addClientPage'} ? 'nav-item active' : 'nav-item'">
+                    <a class="nav-link" id="addclinetstab" th:href="@{/addClientPage}">Add Client</a>
+                </li>
+                <li class="nav-item" th:class="${activePage == 'showContractsPage'} ? 'nav-item active' : 'nav-item'">
+                    <a class="nav-link" id="showcontractstab" th:href="@{/showContractsPage}">Show Contracts</a>
+                </li>
+                <li class="nav-item" th:class="${activePage == 'addContractPage'} ? 'nav-item active' : 'nav-item'">
+                    <a class="nav-link" id="addcontractstab"th:href="@{/addContractPage}">Add Contract</a>
+                </li>
+                <li class="nav-item" th:class="${activePage == 'editClientPage'} ? 'nav-item active' : 'nav-item'">
+                    <a class="nav-link" id="editclinetstab" th:href="@{/editClient}">Edit Client</a>
+                </li>
+                <li class="nav-item" th:class="${activePage == 'editContractPage'} ? 'nav-item active' : 'nav-item'">
+                    <a class="nav-link" id="editcontractstab" th:href="@{/editContract}">Edit Contract</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+</div>
 </body>
 </html>
