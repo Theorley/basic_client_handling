@@ -47,8 +47,12 @@
 <div th:replace="~{fragments/navigation :: header}"> </div>
 <main role="main" class="flex-shrink-0" >
     <button id="fetchButton">Fetch Clients</button>
+
     <table class="table">
         <thead>
+        <div class="container" id="container"></div>
+
+
         <tr>
             <th>ID</th>
             <th>First Name</th>
@@ -57,10 +61,15 @@
             <th>Action</th>
         </tr>
         </thead>
-        <tbody id="clientList"></tbody>
+        <tbody id="clientList">
+
+        </tbody>
+
     </table>
+
     <script>
 var clicked = {theValue : false};
+    var barContainer = document.querySelector('#container');
 var currentlyEditing = {theValue: false};
 document.getElementById("fetchButton").addEventListener("click", fetchClients);
 function fetchClients() {
@@ -162,7 +171,16 @@ function updateClient(client, firstNameCell, lastNameCell, saveButton ,currently
             console.error("Error updating client information:", error)
           );
         window.setTimeout(fetchClients,2000);
-        currentlyEditing.theValue=false;        });
+        var bar = new ProgressBar.Line('#container', {
+        color: '#1c87c9',
+        duration: 2000,
+        easing: 'easeInOut'
+    });
+        bar.animate(1);
+        currentlyEditing.theValue=false;
+window.setTimeout(foo,2000,bar);});
+function foo(bar){
+bar.destroy();}
 
 
 }
@@ -184,6 +202,9 @@ function clearErrorModal() {
 }
 
     </script>
+    <script src="https://cdn.rawgit.com/kimmobrunfeldt/progressbar.js/0.6.1/dist/progressbar.js"></script>
+    <script src="https://cdn.rawgit.com/dropbox/zxcvbn/v1.0/zxcvbn.js"></script>
+
 </main>
 </body>
 </html>
