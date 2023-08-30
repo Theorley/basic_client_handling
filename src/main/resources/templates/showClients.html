@@ -21,6 +21,7 @@
         }
         .navbar-dark .navbar-nav .nav-item.active .nav-link {
             background-color: #1c87c9;
+            border-radius: 15px;
         }
         .container {
             margin-top: 30px;
@@ -177,7 +178,7 @@ function updateClient(
           .catch((error) =>
             console.error("Error updating client information:", error)
           );
-fetchClients();      });
+        window.setTimeout(fetchClients,2000) ;    });
       actionCell.appendChild(saveButton);
     }
   }
