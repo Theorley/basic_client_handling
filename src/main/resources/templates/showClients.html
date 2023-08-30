@@ -60,9 +60,8 @@
         <tbody id="clientList"></tbody>
     </table>
     <script>
-     var clicked;
-var checked;
-var editing = false;
+var clicked = {theValue : false};
+var currentlyEditing = {theValue: false};
 document.getElementById("fetchButton").addEventListener("click", fetchClients);
 function fetchClients() {
   fetch("/allclients")
@@ -75,8 +74,7 @@ function displayClients(clients) {
   const clientListTable = document.getElementById("clientList");
   clientListTable.innerHTML = "";
   clients.forEach((client) => {
-    clicked = false;
-    checked = false;
+
     const row = clientListTable.insertRow();
     const idCell = row.insertCell(0);
     const firstNameCell = row.insertCell(1);
@@ -94,25 +92,22 @@ function displayClients(clients) {
     deleteButton.addEventListener("click", () => deleteClient(client.id));
     actionCell.appendChild(deleteButton);
 
-    console.log(clicked);
-    if (clicked == false) {
-      clicked = true;
       const updateButton = document.createElement("button");
       updateButton.textContent = "Update";
+      updateButton.addEventListener("click", () => {
+          if (currentlyEditing.theValue == false)
+          {-
+              currentlyEditing.theValue=true;
+              const saveButton = document.createElement("button");
+              saveButton.textContent = "Save";
+              actionCell.appendChild(saveButton);
+              updateClient(client, firstNameCell, lastNameCell, saveButton,currentlyEditing);
+          }
 
-      updateButton.addEventListener("click", () =>
-        updateClient(
-          client,
-          firstNameCell,
-          lastNameCell,
-          cinCell,
-          actionCell,
-          editing
-        )
+          }
       );
-
       actionCell.appendChild(updateButton);
-    }
+
   });
 }
 
@@ -129,16 +124,8 @@ function deleteClient(clientId) {
     })
     .catch((error) => console.error("Error deleting client:", error));
 }
-function updateClient(
-  client,
-  firstNameCell,
-  lastNameCell,
-  cinCell,
-  actionCell,
-  editing
-) {
-  if (editing == false) {
-    editing = true;
+function updateClient(client, firstNameCell, lastNameCell, saveButton ,currentlyEditing){
+
     firstNameCell.innerHTML = "";
     const a = createEditableInput(client.first_name);
     firstNameCell.appendChild(a);
@@ -146,17 +133,13 @@ function updateClient(
     lastNameCell.innerHTML = "";
     lastNameCell.appendChild(b);
     const c = createEditableInput(client.cin);
-    if (checked == false) {
-      const saveButton = document.createElement("button");
-      saveButton.textContent = "Save";
-      checked = true;
-      saveButton.addEventListener("click", () => {
-        checked = false;
-        const updatedClient = {
-          first_name: a.value,
-          name: b.value,
-          cin: c.value,
-        };
+    saveButton.addEventListener("click", () => {
+        const updatedClient =
+            {
+                first_name: a.value,
+                name: b.value,
+                cin: c.value,
+            };
 
         fetch(`/updateClient/${c.value}`, {
           method: "PUT",
@@ -178,10 +161,10 @@ function updateClient(
           .catch((error) =>
             console.error("Error updating client information:", error)
           );
-        window.setTimeout(fetchClients,2000) ;    });
-      actionCell.appendChild(saveButton);
-    }
-  }
+        window.setTimeout(fetchClients,2000);
+        currentlyEditing.theValue=false;        });
+
+
 }
 function createEditableInput(value) {
   const input = document.createElement("input");
